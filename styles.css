@@ -20,16 +20,16 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 110px;
 }
 
 body {
   margin: 0;
   font-family:
+    "Inter",
+    "Noto Sans JP",
     "Helvetica Neue",
     Arial,
-    "Hiragino Kaku Gothic ProN",
-    "Hiragino Sans",
-    Meiryo,
     sans-serif;
   background: var(--bg);
   color: var(--text);
@@ -38,6 +38,14 @@ body {
 
 body.menu-open {
   overflow: hidden;
+}
+
+main {
+  overflow: hidden;
+}
+
+section {
+  scroll-margin-top: 110px;
 }
 
 a {
@@ -90,7 +98,9 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: box-shadow 0.3s ease, background 0.3s ease;
+  transition:
+    box-shadow 0.3s ease,
+    background 0.3s ease;
 }
 
 .site-header.is-scrolled {
@@ -107,8 +117,8 @@ button {
 
 .logo span {
   font-size: 21px;
-  font-weight: 800;
-  letter-spacing: 0.05em;
+  font-weight: 900;
+  letter-spacing: 0.08em;
 }
 
 .logo small {
@@ -153,6 +163,7 @@ button {
   height: 42px;
   position: relative;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .menu-button span:not(.sr-only) {
@@ -161,7 +172,9 @@ button {
   width: 24px;
   height: 1px;
   background: var(--text);
-  transition: transform 0.25s ease, top 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    top 0.25s ease;
 }
 
 .menu-button span:nth-child(1) {
@@ -202,10 +215,14 @@ button {
 
 .mobile-menu a {
   font-size: 34px;
-  font-weight: 700;
+  font-weight: 800;
   border-bottom: 1px solid rgba(255, 255, 255, 0.16);
   padding-bottom: 18px;
 }
+
+/* =========================
+   Hero
+========================= */
 
 .hero {
   min-height: 100vh;
@@ -221,20 +238,81 @@ button {
 .hero::before {
   content: "";
   position: absolute;
-  width: 720px;
-  height: 720px;
-  right: -280px;
-  top: -180px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(20, 90, 64, 0.18), transparent 65%);
+  inset: 0;
+  background:
+    linear-gradient(120deg, transparent 0 40%, rgba(13, 59, 42, 0.06) 40% 41%, transparent 41% 100%),
+    linear-gradient(65deg, transparent 0 56%, rgba(185, 154, 91, 0.08) 56% 57%, transparent 57% 100%),
+    linear-gradient(145deg, transparent 0 68%, rgba(13, 59, 42, 0.05) 68% 69%, transparent 69% 100%);
+  animation: heroLineMove 16s ease-in-out infinite alternate;
   pointer-events: none;
+  z-index: 0;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 780px;
+  height: 460px;
+  right: -220px;
+  top: 80px;
+  background:
+    linear-gradient(135deg, rgba(13, 59, 42, 0.12), transparent 58%),
+    linear-gradient(45deg, transparent 0 48%, rgba(185, 154, 91, 0.16) 48% 50%, transparent 50% 100%);
+  clip-path: polygon(14% 0, 100% 10%, 86% 84%, 28% 100%, 0 42%);
+  animation: heroPolygonMove 12s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-copy {
+  position: relative;
+}
+
+.hero-copy::before {
+  content: "";
+  position: absolute;
+  width: 680px;
+  height: 420px;
+  left: -180px;
+  top: -110px;
+  background-image:
+    linear-gradient(rgba(13, 59, 42, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(13, 59, 42, 0.08) 1px, transparent 1px);
+  background-size: 44px 44px;
+  clip-path: polygon(0 14%, 88% 0, 100% 72%, 18% 100%);
+  transform: rotate(-6deg);
+  animation: gridSlide 18s linear infinite;
+  pointer-events: none;
+  z-index: -2;
+}
+
+.hero-copy::after {
+  content: "";
+  position: absolute;
+  width: 520px;
+  height: 340px;
+  left: -120px;
+  top: 120px;
+  background:
+    linear-gradient(120deg, transparent 0 42%, rgba(13, 59, 42, 0.16) 42% 43%, transparent 43% 100%),
+    linear-gradient(60deg, transparent 0 52%, rgba(185, 154, 91, 0.16) 52% 53%, transparent 53% 100%),
+    linear-gradient(150deg, transparent 0 62%, rgba(13, 59, 42, 0.09) 62% 63%, transparent 63% 100%);
+  clip-path: polygon(8% 18%, 82% 0%, 100% 42%, 62% 100%, 0% 78%);
+  animation: geometricDrift 14s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .hero-bg-text {
   position: absolute;
   left: clamp(18px, 5vw, 76px);
   bottom: 18px;
-  font-size: clamp(64px, 14vw, 180px);
+  font-size: clamp(56px, 11vw, 140px);
   font-weight: 900;
   letter-spacing: -0.08em;
   color: rgba(17, 24, 20, 0.035);
@@ -244,7 +322,7 @@ button {
 
 .eyebrow {
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--green-2);
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -252,10 +330,10 @@ button {
 }
 
 .hero h1 {
-  font-size: clamp(48px, 7vw, 108px);
-  line-height: 0.98;
-  letter-spacing: -0.08em;
-  font-weight: 800;
+  font-size: clamp(42px, 5.8vw, 82px);
+  line-height: 1.04;
+  letter-spacing: -0.07em;
+  font-weight: 900;
 }
 
 .hero-lead {
@@ -264,6 +342,7 @@ button {
   font-size: clamp(16px, 1.7vw, 21px);
   line-height: 2;
   color: var(--muted);
+  font-weight: 500;
 }
 
 .hero-actions {
@@ -282,8 +361,11 @@ button {
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  font-weight: 700;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  font-weight: 800;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
 }
 
 .primary-button {
@@ -316,8 +398,9 @@ button {
   border: 1px solid rgba(17, 24, 20, 0.1);
   box-shadow: var(--shadow);
   padding: 30px;
-  min-height: 520px;
+  min-height: auto;
   overflow: hidden;
+  animation: panelFloat 6s ease-in-out infinite;
 }
 
 .hero-panel::before {
@@ -332,8 +415,28 @@ button {
   pointer-events: none;
 }
 
-.panel-header {
+.hero-panel::after {
+  content: "";
+  position: absolute;
+  width: 260px;
+  height: 170px;
+  right: -80px;
+  top: -46px;
+  background:
+    linear-gradient(135deg, rgba(185, 154, 91, 0.2), transparent 58%),
+    linear-gradient(45deg, transparent 0 49%, rgba(13, 59, 42, 0.16) 49% 51%, transparent 51% 100%);
+  clip-path: polygon(18% 0, 100% 12%, 82% 100%, 0 78%);
+  animation: panelGeoMove 10s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-panel > * {
   position: relative;
+  z-index: 1;
+}
+
+.panel-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -345,15 +448,16 @@ button {
 .panel-header span {
   color: var(--muted);
   font-size: 13px;
+  font-weight: 600;
 }
 
 .panel-header strong {
   font-size: 17px;
   color: var(--green);
+  font-weight: 900;
 }
 
 .deal-flow {
-  position: relative;
   margin-top: 34px;
   display: grid;
   gap: 14px;
@@ -369,6 +473,44 @@ button {
   display: flex;
   align-items: center;
   gap: 16px;
+  overflow: hidden;
+}
+
+.deal-step::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(185, 154, 91, 0.18),
+    transparent
+  );
+  transform: translateX(-120%);
+  animation: stepShine 4.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.deal-step:nth-child(2)::after {
+  animation-delay: 0.3s;
+}
+
+.deal-step:nth-child(3)::after {
+  animation-delay: 0.6s;
+}
+
+.deal-step:nth-child(4)::after {
+  animation-delay: 0.9s;
+}
+
+.deal-step:nth-child(5)::after {
+  animation-delay: 1.2s;
+}
+
+.deal-step span,
+.deal-step p {
+  position: relative;
+  z-index: 1;
 }
 
 .deal-step span {
@@ -379,13 +521,14 @@ button {
   display: grid;
   place-items: center;
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 900;
   color: var(--green);
+  flex-shrink: 0;
 }
 
 .deal-step p {
   font-size: 18px;
-  font-weight: 800;
+  font-weight: 900;
 }
 
 .deal-step.active {
@@ -404,8 +547,7 @@ button {
 
 .risk-card {
   position: relative;
-  right: auto;
-  bottom: auto;
+  z-index: 1;
   width: 100%;
   margin-top: 22px;
   padding: 22px;
@@ -419,6 +561,7 @@ button {
   font-size: 13px;
   color: rgba(255, 255, 255, 0.65);
   margin-bottom: 14px;
+  font-weight: 700;
 }
 
 .risk-card ul {
@@ -435,7 +578,12 @@ button {
   padding: 7px 10px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.1);
+  font-weight: 700;
 }
+
+/* =========================
+   Common Sections
+========================= */
 
 .trust-strip {
   margin: 0 clamp(22px, 5vw, 76px);
@@ -450,7 +598,7 @@ button {
 
 .trust-strip p {
   font-size: clamp(13px, 1.8vw, 20px);
-  font-weight: 800;
+  font-weight: 900;
   color: var(--green);
   letter-spacing: -0.03em;
 }
@@ -465,9 +613,20 @@ button {
 }
 
 .section-head h2 {
-  font-size: clamp(34px, 5vw, 68px);
-  line-height: 1.08;
-  letter-spacing: -0.06em;
+  font-size: clamp(30px, 4.2vw, 54px);
+  line-height: 1.12;
+  letter-spacing: -0.055em;
+  font-weight: 900;
+}
+
+.problem .section-head {
+  max-width: none;
+}
+
+.problem .section-head h2 {
+  white-space: nowrap;
+  font-size: clamp(40px, 5.4vw, 82px);
+  letter-spacing: -0.07em;
 }
 
 .problem-grid {
@@ -489,7 +648,7 @@ button {
   display: inline-flex;
   margin-bottom: 50px;
   color: var(--gold);
-  font-weight: 800;
+  font-weight: 900;
 }
 
 .problem-card h3 {
@@ -497,12 +656,14 @@ button {
   line-height: 1.35;
   margin-bottom: 18px;
   letter-spacing: -0.04em;
+  font-weight: 900;
 }
 
 .problem-card p {
   color: var(--muted);
   line-height: 1.85;
   font-size: 14px;
+  font-weight: 500;
 }
 
 .message-section {
@@ -521,12 +682,15 @@ button {
 .message-card::after {
   content: "";
   position: absolute;
-  right: -150px;
-  top: -150px;
-  width: 420px;
-  height: 420px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  right: -80px;
+  top: -70px;
+  width: 360px;
+  height: 240px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.13), transparent 60%),
+    linear-gradient(45deg, transparent 0 49%, rgba(255, 255, 255, 0.12) 49% 51%, transparent 51% 100%);
+  clip-path: polygon(12% 0, 100% 18%, 76% 100%, 0 70%);
+  animation: panelGeoMove 12s ease-in-out infinite alternate;
 }
 
 .message-card .eyebrow {
@@ -534,9 +698,12 @@ button {
 }
 
 .message-card h2 {
-  font-size: clamp(34px, 5vw, 70px);
+  font-size: clamp(32px, 4.2vw, 54px);
   line-height: 1.18;
   letter-spacing: -0.06em;
+  position: relative;
+  z-index: 1;
+  font-weight: 900;
 }
 
 .message-card p:last-child {
@@ -545,6 +712,9 @@ button {
   color: rgba(255, 255, 255, 0.72);
   font-size: 17px;
   line-height: 2;
+  position: relative;
+  z-index: 1;
+  font-weight: 500;
 }
 
 .service-list {
@@ -561,16 +731,17 @@ button {
 
 .service-num {
   font-size: 14px;
-  font-weight: 800;
+  font-weight: 900;
   color: var(--gold);
 }
 
 .service-item h3 {
-  font-size: clamp(28px, 4vw, 54px);
+  font-size: clamp(26px, 3.2vw, 42px);
   letter-spacing: -0.06em;
   line-height: 1;
   margin-bottom: 14px;
   color: var(--green);
+  font-weight: 900;
 }
 
 .service-item p {
@@ -578,6 +749,7 @@ button {
   font-size: 16px;
   line-height: 1.85;
   max-width: 760px;
+  font-weight: 500;
 }
 
 .flow {
@@ -619,7 +791,7 @@ button {
 
 .timeline-item span {
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 900;
   color: var(--gold);
 }
 
@@ -627,6 +799,7 @@ button {
   margin-top: 42px;
   font-size: 30px;
   letter-spacing: -0.05em;
+  font-weight: 900;
 }
 
 .timeline-item p {
@@ -634,6 +807,7 @@ button {
   color: var(--muted);
   line-height: 1.8;
   font-size: 14px;
+  font-weight: 500;
 }
 
 .risk-grid {
@@ -661,12 +835,14 @@ button {
   color: rgba(255, 255, 255, 0.55);
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  font-weight: 800;
 }
 
 .risk-box h3 {
   margin-top: 50px;
   font-size: 25px;
   letter-spacing: -0.05em;
+  font-weight: 900;
 }
 
 .risk-box span {
@@ -674,6 +850,7 @@ button {
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.8;
   font-size: 14px;
+  font-weight: 500;
 }
 
 .strength {
@@ -689,9 +866,10 @@ button {
 }
 
 .strength-inner h2 {
-  font-size: clamp(36px, 5vw, 76px);
+  font-size: clamp(34px, 4.4vw, 58px);
   line-height: 1.08;
   letter-spacing: -0.07em;
+  font-weight: 900;
 }
 
 .strength-inner > p:last-child {
@@ -699,6 +877,7 @@ button {
   color: var(--muted);
   line-height: 2;
   font-size: 16px;
+  font-weight: 500;
 }
 
 .strength-cards {
@@ -717,7 +896,7 @@ button {
 
 .strength-card span {
   color: var(--gold);
-  font-weight: 800;
+  font-weight: 900;
 }
 
 .strength-card strong {
@@ -725,12 +904,14 @@ button {
   margin-top: 44px;
   font-size: 30px;
   letter-spacing: -0.05em;
+  font-weight: 900;
 }
 
 .strength-card p {
   margin-top: 14px;
   color: var(--muted);
   line-height: 1.8;
+  font-weight: 500;
 }
 
 .contact {
@@ -748,9 +929,10 @@ button {
 }
 
 .contact h2 {
-  font-size: clamp(42px, 7vw, 96px);
-  line-height: 1;
+  font-size: clamp(38px, 5.6vw, 72px);
+  line-height: 1.04;
   letter-spacing: -0.08em;
+  font-weight: 900;
 }
 
 .contact p:not(.eyebrow) {
@@ -759,6 +941,7 @@ button {
   color: rgba(255, 255, 255, 0.72);
   line-height: 2;
   font-size: 17px;
+  font-weight: 500;
 }
 
 .contact .primary-button {
@@ -778,6 +961,7 @@ button {
 .footer strong {
   font-size: 22px;
   letter-spacing: 0.05em;
+  font-weight: 900;
 }
 
 .footer p,
@@ -788,7 +972,9 @@ button {
 .reveal {
   opacity: 0;
   transform: translateY(28px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
 }
 
 .reveal.is-visible {
@@ -796,166 +982,95 @@ button {
   transform: translateY(0);
 }
 
-@media (max-width: 980px) {
-  .desktop-nav {
-    display: none;
+/* =========================
+   Animation
+========================= */
+
+@keyframes heroLineMove {
+  0% {
+    transform: translate3d(-22px, -10px, 0);
+    opacity: 0.6;
   }
 
-  .menu-button {
-    display: block;
-  }
-
-  .hero {
-    grid-template-columns: 1fr;
-    padding-top: 130px;
-  }
-
-  .hero-panel {
-    min-height: auto;
-  }
-
-  .risk-card {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    width: 100%;
-    margin-top: 22px;
-  }
-
-  .trust-strip {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .problem-grid,
-  .risk-grid,
-  .strength {
-    grid-template-columns: 1fr;
-  }
-
-  .strength-inner {
-    position: static;
+  100% {
+    transform: translate3d(28px, 16px, 0);
+    opacity: 1;
   }
 }
 
-@media (max-width: 640px) {
-  .site-header {
-    top: 12px;
-    width: calc(100% - 20px);
-    height: 62px;
-    padding: 0 16px;
+@keyframes heroPolygonMove {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-4deg);
+    opacity: 0.5;
   }
 
-  .logo span {
-    font-size: 18px;
+  100% {
+    transform: translate3d(-42px, 26px, 0) rotate(3deg);
+    opacity: 0.9;
+  }
+}
+
+@keyframes geometricDrift {
+  0% {
+    transform: translate3d(-20px, -8px, 0) rotate(-4deg);
+    opacity: 0.42;
   }
 
-  .logo small {
-    font-size: 9px;
+  100% {
+    transform: translate3d(32px, 18px, 0) rotate(3deg);
+    opacity: 0.78;
+  }
+}
+
+@keyframes gridSlide {
+  0% {
+    background-position: 0 0;
+    opacity: 0.28;
   }
 
-  .hero {
-    padding: 120px 20px 64px;
-    gap: 34px;
+  100% {
+    background-position: 88px 44px;
+    opacity: 0.48;
+  }
+}
+
+@keyframes panelGeoMove {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+    opacity: 0.52;
   }
 
-  .hero h1 {
-    font-size: 48px;
-    letter-spacing: -0.07em;
+  100% {
+    transform: translate3d(-24px, 18px, 0) rotate(-5deg);
+    opacity: 0.88;
+  }
+}
+
+@keyframes panelFloat {
+  0%,
+  100% {
+    transform: translateY(0);
   }
 
-  .hero-lead {
-    font-size: 15px;
-    line-height: 1.9;
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes stepShine {
+  0% {
+    transform: translateX(-120%);
   }
 
-  .primary-button,
-  .secondary-button {
-    width: 100%;
-  }
-
-  .hero-panel {
-    padding: 20px;
-    border-radius: 24px;
-  }
-
-  .panel-header {
-    flex-direction: column;
-  }
-
-  .deal-step {
-    padding: 14px;
-  }
-
-  .deal-step p {
-    font-size: 16px;
-  }
-
-  .section {
-    padding: 82px 20px;
-  }
-
-  .section-head {
-    margin-bottom: 34px;
-  }
-
-  .section-head h2,
-  .message-card h2,
-  .strength-inner h2,
-  .contact h2 {
-    letter-spacing: -0.06em;
-  }
-
-  .problem-card,
-  .message-card,
-  .risk-box,
-  .strength-card {
-    padding: 24px;
-    border-radius: 22px;
-  }
-
-  .problem-card {
-    min-height: auto;
-  }
-
-  .problem-card span {
-    margin-bottom: 32px;
-  }
-
-  .service-item {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 28px 0;
-  }
-
-  .service-item h3 {
-    font-size: 34px;
-  }
-
-  .timeline {
-    grid-template-columns: repeat(6, 240px);
-  }
-
-  .contact {
-    padding: 88px 20px;
-  }
-
-  .footer {
-    flex-direction: column;
-    align-items: flex-start;
+  45%,
+  100% {
+    transform: translateX(120%);
   }
 }
 
 /* =========================
-   Responsive Fix
+   Responsive
 ========================= */
-
-main {
-  overflow: hidden;
-}
-
-section {
-  scroll-margin-top: 110px;
-}
 
 @media (max-width: 980px) {
   .site-header {
@@ -971,7 +1086,6 @@ section {
 
   .menu-button {
     display: block;
-    flex-shrink: 0;
   }
 
   .hero {
@@ -982,7 +1096,7 @@ section {
   }
 
   .hero h1 {
-    font-size: clamp(46px, 10vw, 78px);
+    font-size: clamp(40px, 8vw, 64px);
     line-height: 1.02;
   }
 
@@ -994,7 +1108,6 @@ section {
   .hero-panel {
     width: 100%;
     max-width: 100%;
-    min-height: auto;
     padding: 24px;
   }
 
@@ -1016,8 +1129,13 @@ section {
   .message-card h2,
   .strength-inner h2,
   .contact h2 {
-    font-size: clamp(34px, 8vw, 56px);
-    line-height: 1.12;
+    font-size: clamp(30px, 6vw, 44px);
+    line-height: 1.14;
+  }
+
+  .problem .section-head h2 {
+    white-space: normal;
+    font-size: clamp(32px, 6.4vw, 48px);
   }
 
   .problem-grid,
@@ -1079,7 +1197,7 @@ section {
   }
 
   .hero h1 {
-    font-size: 43px;
+    font-size: 38px;
     line-height: 1.04;
     letter-spacing: -0.07em;
   }
@@ -1101,6 +1219,16 @@ section {
   .hero-panel {
     padding: 18px;
     border-radius: 22px;
+    animation: none;
+  }
+
+  .hero-bg-text {
+    display: none;
+  }
+
+  .hero-copy::before,
+  .hero-copy::after {
+    opacity: 0.45;
   }
 
   .panel-header {
@@ -1150,9 +1278,14 @@ section {
   .message-card h2,
   .strength-inner h2,
   .contact h2 {
-    font-size: 34px;
+    font-size: 30px;
     line-height: 1.16;
     letter-spacing: -0.06em;
+  }
+
+  .problem .section-head h2 {
+    white-space: normal;
+    font-size: 30px;
   }
 
   .problem-card,
@@ -1178,7 +1311,7 @@ section {
   }
 
   .service-item h3 {
-    font-size: 32px;
+    font-size: 28px;
   }
 
   .timeline {
@@ -1206,22 +1339,147 @@ section {
     flex-direction: column;
     align-items: flex-start;
   }
-
-  .problem .section-head {
-  max-width: none;
 }
 
-.problem .section-head h2 {
-  white-space: nowrap;
-  font-size: clamp(48px, 7vw, 116px);
-  letter-spacing: -0.08em;
-}
-
-@media (max-width: 640px) {
-  .problem .section-head h2 {
-    white-space: normal;
-    font-size: 34px;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
   }
 }
 
+/* =========================
+   Section Geometric Background
+========================= */
+
+.problem,
+.service,
+.risk,
+.strength,
+.contact {
+  position: relative;
+  overflow: hidden;
+}
+
+.problem::before,
+.service::before,
+.risk::before,
+.strength::before,
+.contact::before {
+  content: "";
+  position: absolute;
+  width: 520px;
+  height: 360px;
+  pointer-events: none;
+  opacity: 0.42;
+  z-index: 0;
+  background:
+    linear-gradient(120deg, transparent 0 42%, rgba(13, 59, 42, 0.09) 42% 43%, transparent 43% 100%),
+    linear-gradient(60deg, transparent 0 54%, rgba(185, 154, 91, 0.12) 54% 55%, transparent 55% 100%),
+    linear-gradient(150deg, transparent 0 64%, rgba(13, 59, 42, 0.07) 64% 65%, transparent 65% 100%);
+  clip-path: polygon(8% 18%, 82% 0%, 100% 42%, 62% 100%, 0% 78%);
+  animation: sectionGeoFloat 18s ease-in-out infinite alternate;
+}
+
+.problem::before {
+  right: -180px;
+  top: 40px;
+}
+
+.service::before {
+  left: -180px;
+  top: 180px;
+  transform: rotate(12deg);
+}
+
+.risk::before {
+  right: -160px;
+  top: 120px;
+  opacity: 0.32;
+}
+
+.strength::before {
+  left: -160px;
+  bottom: 80px;
+  opacity: 0.32;
+}
+
+.contact::before {
+  right: -140px;
+  top: 40px;
+  opacity: 0.18;
+  background:
+    linear-gradient(120deg, transparent 0 42%, rgba(255, 255, 255, 0.16) 42% 43%, transparent 43% 100%),
+    linear-gradient(60deg, transparent 0 54%, rgba(185, 154, 91, 0.18) 54% 55%, transparent 55% 100%),
+    linear-gradient(150deg, transparent 0 64%, rgba(255, 255, 255, 0.12) 64% 65%, transparent 65% 100%);
+}
+
+.problem > *,
+.service > *,
+.risk > *,
+.strength > *,
+.contact > * {
+  position: relative;
+  z-index: 1;
+}
+
+.flow {
+  position: relative;
+  overflow: hidden;
+}
+
+.flow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(13, 59, 42, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(13, 59, 42, 0.055) 1px, transparent 1px);
+  background-size: 48px 48px;
+  animation: sectionGridMove 22s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.flow > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes sectionGeoFloat {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-4deg);
+  }
+
+  100% {
+    transform: translate3d(-28px, 24px, 0) rotate(4deg);
+  }
+}
+
+@keyframes sectionGridMove {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 96px 48px;
+  }
+}
+
+@media (max-width: 640px) {
+  .problem::before,
+  .service::before,
+  .risk::before,
+  .strength::before,
+  .contact::before {
+    width: 360px;
+    height: 250px;
+    opacity: 0.22;
+  }
+
+  .flow::before {
+    opacity: 0.45;
+  }
 }
