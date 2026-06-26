@@ -1206,4 +1206,22 @@ section {
     flex-direction: column;
     align-items: flex-start;
   }
+
+  .problem .section-head {
+  max-width: none;
+}
+
+.problem .section-head h2 {
+  white-space: nowrap;
+  font-size: clamp(48px, 7vw, 116px);
+  letter-spacing: -0.08em;
+}
+
+@media (max-width: 640px) {
+  .problem .section-head h2 {
+    white-space: normal;
+    font-size: 34px;
+  }
+}
+
 }
