@@ -45,6 +45,8 @@ revealElements.forEach((element) => {
 });
 
 function toggleMenu() {
+  if (!menuButton || !mobileMenu) return;
+
   const isOpen = menuButton.classList.toggle("is-open");
 
   mobileMenu.classList.toggle("is-open", isOpen);
@@ -53,6 +55,8 @@ function toggleMenu() {
 }
 
 function closeMenu() {
+  if (!menuButton || !mobileMenu) return;
+
   menuButton.classList.remove("is-open");
   mobileMenu.classList.remove("is-open");
   document.body.classList.remove("menu-open");
