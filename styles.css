@@ -805,3 +805,135 @@ button { font: inherit; }
     opacity: 0.35;
   }
 }
+
+.contact-page {
+  min-height: 100vh;
+  padding: 120px 20px 80px;
+  background: #f5f7f6;
+}
+
+.contact-container {
+  width: min(760px, 100%);
+  margin: 0 auto;
+  padding: 56px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+}
+
+.contact-label {
+  margin: 0 0 12px;
+  color: #287455;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.contact-container h1 {
+  margin: 0;
+  color: #173c2d;
+  font-size: clamp(32px, 5vw, 48px);
+}
+
+.contact-description {
+  margin: 20px 0 40px;
+  color: #66716c;
+  line-height: 1.8;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  color: #173c2d;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  border: 1px solid #d7dfdb;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #1e2924;
+  font: inherit;
+  outline: none;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #287455;
+  box-shadow: 0 0 0 4px rgba(40, 116, 85, 0.12);
+}
+
+.form-group textarea {
+  min-height: 180px;
+  resize: vertical;
+}
+
+.required {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: #e95151;
+  color: #ffffff;
+  font-size: 11px;
+}
+
+.form-consent {
+  margin: 28px 0;
+  color: #39453f;
+  font-size: 14px;
+}
+
+.form-consent label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-submit {
+  width: 100%;
+  padding: 16px;
+  border: 0;
+  border-radius: 999px;
+  background: #173c2d;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+
+.contact-submit:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.honeypot {
+  position: absolute;
+  left: -9999px;
+}
+
+@media (max-width: 600px) {
+  .contact-page {
+    padding: 80px 16px 48px;
+  }
+
+  .contact-container {
+    padding: 32px 20px;
+    border-radius: 14px;
+  }
+}
