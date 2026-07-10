@@ -1,427 +1,1171 @@
 <!doctype html>
 
 <html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
 
-  <title>KITEN | 事業会社向けM&A実務支援</title>
+    <title>KITEN | 事業会社向けM&A実務支援</title>
 
-  <meta name="description" content="M&A経験を持つ専門人材を業務委託形式でアサインし、事業会社のM&A戦略設計から実行、PMIまでを支援します。" />
+    <meta
+      name="description"
+      content="M&A経験を持つ専門人材を業務委託形式でアサインし、事業会社のM&A戦略設計から実行、PMIまでを支援します。"
+    />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;800;900&display=swap"
-    rel="stylesheet" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
 
-  <link rel="stylesheet" href="styles.css" />
-</head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;800;900&display=swap"
+      rel="stylesheet"
+    />
 
-<body>
-  <div class="page-progress" aria-hidden="true"></div>
+    <link rel="stylesheet" href="styles.css" />
 
-  <header class="site-header" data-header>
-    <a href="/" class="logo" aria-label="KITENトップページ">
-      <span>KITEN</span>
-      <small>M&A Support</small>
-    </a>
+    <!-- お問い合わせモーダル用CSS -->
+    <style>
+      .contact-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
 
-    <nav class="desktop-nav" aria-label="メインナビゲーション">
+      .contact-modal.is-open {
+        display: flex;
+      }
+
+      .contact-modal__overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(5, 18, 13, 0.74);
+        backdrop-filter: blur(8px);
+        cursor: pointer;
+      }
+
+      .contact-modal__content {
+        position: relative;
+        z-index: 1;
+        width: min(100%, 680px);
+        max-height: calc(100vh - 48px);
+        padding: 48px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        background: #ffffff;
+        color: #173c2d;
+        border: 1px solid rgba(23, 60, 45, 0.12);
+        border-radius: 20px;
+        box-shadow: 0 32px 100px rgba(0, 0, 0, 0.3);
+      }
+
+      .contact-modal__close {
+        position: absolute;
+        top: 16px;
+        right: 18px;
+        display: grid;
+        width: 42px;
+        height: 42px;
+        padding: 0;
+        place-items: center;
+        border: 0;
+        border-radius: 50%;
+        background: rgba(23, 60, 45, 0.07);
+        color: #173c2d;
+        font-family: inherit;
+        font-size: 28px;
+        line-height: 1;
+        cursor: pointer;
+        transition:
+          background-color 0.2s ease,
+          transform 0.2s ease;
+      }
+
+      .contact-modal__close:hover {
+        background: rgba(23, 60, 45, 0.14);
+        transform: rotate(5deg);
+      }
+
+      .contact-modal__heading {
+        margin-bottom: 32px;
+        padding-right: 40px;
+      }
+
+      .contact-modal__heading .eyebrow {
+        margin-bottom: 10px;
+      }
+
+      .contact-modal__heading h2 {
+        margin: 0 0 14px;
+        color: #173c2d;
+        font-size: clamp(26px, 4vw, 38px);
+        line-height: 1.35;
+      }
+
+      .contact-modal__description {
+        margin: 0;
+        color: #627069;
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      .contact-form {
+        display: grid;
+        gap: 22px;
+      }
+
+      .contact-form__field {
+        display: grid;
+        gap: 9px;
+      }
+
+      .contact-form__field label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #173c2d;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .contact-form__required {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3px 7px;
+        border-radius: 999px;
+        background: #173c2d;
+        color: #ffffff;
+        font-size: 10px;
+        font-weight: 700;
+        line-height: 1;
+      }
+
+      .contact-form__field input,
+      .contact-form__field textarea {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 14px 15px;
+        border: 1px solid #ccd5d0;
+        border-radius: 10px;
+        outline: none;
+        background: #f9fbfa;
+        color: #173c2d;
+        font-family: inherit;
+        font-size: 16px;
+        transition:
+          border-color 0.2s ease,
+          background-color 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .contact-form__field textarea {
+        min-height: 150px;
+        line-height: 1.7;
+        resize: vertical;
+      }
+
+      .contact-form__field input:focus,
+      .contact-form__field textarea:focus {
+        border-color: #173c2d;
+        background: #ffffff;
+        box-shadow: 0 0 0 4px rgba(23, 60, 45, 0.09);
+      }
+
+      .contact-form__submit {
+        width: 100%;
+        min-height: 54px;
+        padding: 14px 24px;
+        border: 1px solid #173c2d;
+        border-radius: 999px;
+        background: #173c2d;
+        color: #ffffff;
+        font-family: inherit;
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        cursor: pointer;
+        transition:
+          opacity 0.2s ease,
+          transform 0.2s ease,
+          background-color 0.2s ease;
+      }
+
+      .contact-form__submit:hover:not(:disabled) {
+        background: #245a44;
+        transform: translateY(-2px);
+      }
+
+      .contact-form__submit:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+
+      .contact-form__error {
+        min-height: 22px;
+        margin: -4px 0 0;
+        color: #b3261e;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .contact-form__honeypot {
+        position: absolute;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+
+      .contact-complete {
+        padding: 40px 0 10px;
+        text-align: center;
+      }
+
+      .contact-complete__icon {
+        display: grid;
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 24px;
+        place-items: center;
+        border-radius: 50%;
+        background: #173c2d;
+        color: #ffffff;
+        font-size: 32px;
+        font-weight: 800;
+      }
+
+      .contact-complete h2 {
+        margin: 10px 0 18px;
+        color: #173c2d;
+        font-size: clamp(26px, 4vw, 38px);
+      }
+
+      .contact-complete__message {
+        margin: 0 0 32px;
+        color: #627069;
+        line-height: 1.9;
+      }
+
+      body.contact-modal-open {
+        overflow: hidden;
+      }
+
+      .contact-modal [hidden] {
+        display: none !important;
+      }
+
+      @media (max-width: 640px) {
+        .contact-modal {
+          align-items: flex-start;
+          padding: 12px;
+        }
+
+        .contact-modal__content {
+          width: 100%;
+          max-height: calc(100dvh - 24px);
+          padding: 42px 20px 28px;
+          border-radius: 16px;
+        }
+
+        .contact-modal__close {
+          top: 10px;
+          right: 10px;
+        }
+
+        .contact-modal__heading {
+          padding-right: 30px;
+        }
+
+        .contact-modal__heading h2 {
+          font-size: 25px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page-progress" aria-hidden="true"></div>
+
+    <header class="site-header" data-header>
+      <a href="/" class="logo" aria-label="KITENトップページ">
+        <span>KITEN</span>
+        <small>M&A Support</small>
+      </a>
+
+      <nav
+        class="desktop-nav"
+        aria-label="メインナビゲーション"
+      >
+        <a href="/">Top</a>
+        <a href="/buy-side/">Buy-side</a>
+        <a href="/sell-side/">Sell-side</a>
+
+        <a href="#contactModal" data-contact-open>
+          Contact
+        </a>
+      </nav>
+
+      <button
+        class="menu-button"
+        type="button"
+        data-menu-button
+        aria-expanded="false"
+        aria-controls="mobileMenu"
+      >
+        <span></span>
+        <span></span>
+        <span class="sr-only">メニューを開く</span>
+      </button>
+    </header>
+
+    <div
+      class="mobile-menu"
+      id="mobileMenu"
+      data-mobile-menu
+    >
       <a href="/">Top</a>
       <a href="/buy-side/">Buy-side</a>
       <a href="/sell-side/">Sell-side</a>
-      <a href="/contact.html">Contact</a>
-    </nav>
-    <button class="menu-button" type="button" data-menu-button aria-expanded="false" aria-controls="mobileMenu">
-      <span></span>
-      <span></span>
-      <span class="sr-only">メニューを開く</span>
-    </button>
 
-  </header>
-
-  <div class="mobile-menu" id="mobileMenu" data-mobile-menu>
-    <a href="/">Top</a>
-    <a href="/buy-side/">Buy-side</a>
-    <a href="/sell-side/">Sell-side</a>
-    <a href="/contact.html">Contact</a>
-  </div>
-
-  <main id="top">
-    <section class="hero">
-      <div class="hero-bg-text" aria-hidden="true">
-        M&A SUPPORT
-      </div>
-
-      <div class="hero-copy reveal">
-        <p class="eyebrow">
-          M&A Execution Support
-        </p>
-
-        <h1>
-          社内に、<br />
-          M&Aを推進する<br />
-          実行力を。
-        </h1>
-
-        <p class="hero-lead">
-          M&A経験を持つ専門人材を、必要な期間だけアサイン。<br />
-          戦略設計から候補先の検討、交渉、デューデリジェンス、
-          契約、PMIまで、事業会社様のM&A実務を支援します。
-        </p>
-
-        <a class="primary-button" href="/buy-side/">
-          買い手企業向け支援を見る
-        </a>
-
-        <a class="secondary-button" href="/sell-side/">
-          売り手企業向け支援を見る
-        </a>
-      </div>
-
-      <div class="hero-panel reveal">
-        <div class="panel-header">
-          <span>Support Menu</span>
-          <strong>M&A Execution Support</strong>
-        </div>
-
-        <div class="deal-flow">
-          <div class="deal-step active">
-            <span>01</span>
-            <p>M&A Strategy</p>
-          </div>
-
-          <div class="deal-step">
-            <span>02</span>
-            <p>Target Selection</p>
-          </div>
-
-          <div class="deal-step">
-            <span>03</span>
-            <p>Due Diligence</p>
-          </div>
-
-          <div class="deal-step">
-            <span>04</span>
-            <p>Negotiation</p>
-          </div>
-
-          <div class="deal-step final">
-            <span>05</span>
-            <p>PMI Support</p>
-          </div>
-        </div>
-
-        <div class="risk-card">
-          <p>Service Feature</p>
-
-          <ul>
-            <li>月額10万円〜</li>
-            <li>最低3か月〜</li>
-            <li>経験者をアサイン</li>
-            <li>累計15社以上</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="trust-strip reveal" aria-label="サービスの特徴">
-      <p>月額10万円〜</p>
-      <p>最低3か月〜</p>
-      <p>M&A経験者</p>
-      <p>累計15社以上</p>
-    </section>
-
-    <section class="section service" id="service">
-      <div class="section-head reveal">
-        <p class="eyebrow">Support Type</p>
-
-        <h2>
-          立場に合わせたM&A実務支援。
-        </h2>
-      </div>
-
-      <div class="service-list">
-        <article class="service-item reveal">
-          <span class="service-num">01</span>
-
-          <div>
-            <h3>
-              買い手企業向けM&A実務支援
-            </h3>
-
-            <p>
-              M&A戦略の設計から候補企業の検討、
-              LOI、デューデリジェンス、条件交渉、
-              契約、PMIまで、買収に必要な実務を支援します。
-            </p>
-
-            <div class="hero-actions">
-              <a class="primary-button" href="/buy-side/">
-                買い手企業向け支援を見る
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <article class="service-item reveal">
-          <span class="service-num">02</span>
-
-          <div>
-            <h3>
-              売り手企業向けM&A実務支援
-            </h3>
-
-            <p>
-              売却方針の整理から企業価値の見立て、
-              買い手候補の検討、条件交渉、
-              DD対応、クロージングまで支援します。
-            </p>
-
-            <div class="hero-actions">
-              <a class="secondary-button" href="/sell-side/">
-                売り手企業向け支援を見る
-              </a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section problem" id="strength">
-      <div class="section-head reveal">
-        <p class="eyebrow">Why KITEN</p>
-
-        <h2>
-          採用せずに、M&Aの専門人材を。
-        </h2>
-      </div>
-
-      <div class="problem-grid">
-        <article class="problem-card reveal">
-          <span>01</span>
-
-          <h3>経験とノウハウを補う</h3>
-
-          <p>
-            M&Aの推進には、案件検討から交渉、
-            デューデリジェンス、契約まで、
-            幅広い経験と専門的なノウハウが必要です。
-            実務経験を持つ人材が、貴社のM&A推進を支援します。
-          </p>
-        </article>
-
-        <article class="problem-card reveal">
-          <span>02</span>
-
-          <h3>実務リソースを確保する</h3>
-
-          <p>
-            社内の担当者だけでは不足しやすい実務リソースを、
-            業務委託形式で補完します。
-            社内メンバーと連携しながら、
-            案件を前に進めます。
-          </p>
-        </article>
-
-        <article class="problem-card reveal">
-          <span>03</span>
-
-          <h3>固定化リスクを抑える</h3>
-
-          <p>
-            専門人材を正社員として新規採用する場合と比べ、
-            採用コストや人材の固定化リスクを抑えられます。
-            契約期間は最低3か月から、
-            ニーズに合わせて調整可能です。
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section message-section reveal">
-      <div class="message-card">
-        <p class="eyebrow">Professional Team</p>
-
-        <h2>
-          実務経験を持つ人材が、<br />
-          貴社のチームに加わります。
-        </h2>
-
-        <p>
-          上場企業でM&A責任者を務めた人材や、
-          デロイト、M&A総研などで
-          FA業務を経験した人材を中心に、
-          案件の内容や必要な業務に合わせてアサインします。
-        </p>
-
-        <p>
-          外部からの助言だけではなく、
-          貴社の担当者と連携しながら、
-          M&Aの検討と実行を実務レベルでサポートします。
-        </p>
-      </div>
-    </section>
-
-    <section class="section service" id="price">
-      <div class="section-head reveal">
-        <p class="eyebrow">Service & Price</p>
-
-        <h2>
-          必要な支援を、必要な期間だけ。
-        </h2>
-      </div>
-
-      <div class="service-list">
-        <article class="service-item reveal">
-          <span class="service-num">01</span>
-
-          <div>
-            <h3>
-              非上場企業を対象とするM&A
-            </h3>
-
-            <p>
-              M&A戦略の整理、対象会社の検討、
-              アプローチ、条件交渉、
-              デューデリジェンス、契約対応など、
-              案件の状況に合わせて実務を支援します。
-            </p>
-
-            <p>
-              <strong>月額10万円〜</strong>
-            </p>
-
-            <div class="hero-actions">
-              <a class="primary-button" href="/contact.html">
-                詳細を相談する
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <article class="service-item reveal">
-          <span class="service-num">02</span>
-
-          <div>
-            <h3>
-              上場企業を対象とするM&A
-            </h3>
-
-            <p>
-              上場企業を対象とした案件に必要となる調査、
-              社内検討資料の作成、専門家との連携、
-              交渉や実行プロセスを支援します。
-            </p>
-
-            <p>
-              <strong>月額20万円〜</strong>
-            </p>
-
-            <div class="hero-actions">
-              <a class="secondary-button" href="/contact.html">
-                詳細を相談する
-              </a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section problem">
-      <div class="section-head reveal">
-        <p class="eyebrow">Track Record</p>
-
-        <h2>
-          累計15社以上のM&A推進を支援。
-        </h2>
-      </div>
-
-      <div class="problem-grid">
-        <article class="problem-card reveal">
-          <span>01</span>
-
-          <h3>上場企業</h3>
-
-          <p>
-            株式会社fonfun様をはじめ、
-            プロモーション企画事業を手掛ける
-            東証上場企業などをご支援しています。
-          </p>
-        </article>
-
-        <article class="problem-card reveal">
-          <span>02</span>
-
-          <h3>成長企業・事業会社</h3>
-
-          <p>
-            大手保険代理店やIPO準備中のSI企業など、
-            成長フェーズにある企業の
-            M&A推進を支援しています。
-          </p>
-        </article>
-
-        <article class="problem-card reveal">
-          <span>03</span>
-
-          <h3>海外上場企業</h3>
-
-          <p>
-            複数の海外上場企業を含め、
-            企業ごとの体制や案件状況に合わせた
-            実務支援を行っています。
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <section class="contact" id="contact">
-      <div class="contact-inner reveal">
-        <p class="eyebrow">Contact</p>
-
-        <h2>
-          まずは30分、<br />
-          現在の状況をお聞かせください。
-        </h2>
-
-        <p>
-          M&Aを検討しているものの、
-          社内の経験やリソースが不足している。
-          どの業務を依頼できるか知りたい。
-          そのような段階からでもご相談いただけます。
-        </p>
-
-        <p>
-          オンラインにて、
-          サービス内容や支援方法について
-          ご説明いたします。
-        </p>
-
-        <a class="primary-button light" href="/contact.html">
-          オンライン相談を申し込む
-        </a>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="footer">
-    <div>
-      <strong>KITEN</strong>
-      <p>M&A Execution Support</p>
+      <a href="#contactModal" data-contact-open>
+        Contact
+      </a>
     </div>
 
-    <small>
-      © KITEN. All Rights Reserved.
-    </small>
-  </footer>
+    <main id="top">
+      <section class="hero">
+        <div class="hero-bg-text" aria-hidden="true">
+          M&A SUPPORT
+        </div>
 
-  <script src="app.js"></script>
+        <div class="hero-copy reveal">
+          <p class="eyebrow">
+            M&A Execution Support
+          </p>
 
-</body>
+          <h1>
+            社内に、<br />
+            M&Aを推進する<br />
+            実行力を。
+          </h1>
 
+          <p class="hero-lead">
+            M&A経験を持つ専門人材を、必要な期間だけアサイン。<br />
+            戦略設計から候補先の検討、交渉、デューデリジェンス、
+            契約、PMIまで、事業会社様のM&A実務を支援します。
+          </p>
+
+          <a class="primary-button" href="/buy-side/">
+            買い手企業向け支援を見る
+          </a>
+
+          <a class="secondary-button" href="/sell-side/">
+            売り手企業向け支援を見る
+          </a>
+        </div>
+
+        <div class="hero-panel reveal">
+          <div class="panel-header">
+            <span>Support Menu</span>
+            <strong>M&A Execution Support</strong>
+          </div>
+
+          <div class="deal-flow">
+            <div class="deal-step active">
+              <span>01</span>
+              <p>M&A Strategy</p>
+            </div>
+
+            <div class="deal-step">
+              <span>02</span>
+              <p>Target Selection</p>
+            </div>
+
+            <div class="deal-step">
+              <span>03</span>
+              <p>Due Diligence</p>
+            </div>
+
+            <div class="deal-step">
+              <span>04</span>
+              <p>Negotiation</p>
+            </div>
+
+            <div class="deal-step final">
+              <span>05</span>
+              <p>PMI Support</p>
+            </div>
+          </div>
+
+          <div class="risk-card">
+            <p>Service Feature</p>
+
+            <ul>
+              <li>月額10万円〜</li>
+              <li>最低3か月〜</li>
+              <li>経験者をアサイン</li>
+              <li>累計15社以上</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="trust-strip reveal"
+        aria-label="サービスの特徴"
+      >
+        <p>月額10万円〜</p>
+        <p>最低3か月〜</p>
+        <p>M&A経験者</p>
+        <p>累計15社以上</p>
+      </section>
+
+      <section class="section service" id="service">
+        <div class="section-head reveal">
+          <p class="eyebrow">Support Type</p>
+
+          <h2>
+            立場に合わせたM&A実務支援。
+          </h2>
+        </div>
+
+        <div class="service-list">
+          <article class="service-item reveal">
+            <span class="service-num">01</span>
+
+            <div>
+              <h3>
+                買い手企業向けM&A実務支援
+              </h3>
+
+              <p>
+                M&A戦略の設計から候補企業の検討、
+                LOI、デューデリジェンス、条件交渉、
+                契約、PMIまで、買収に必要な実務を支援します。
+              </p>
+
+              <div class="hero-actions">
+                <a
+                  class="primary-button"
+                  href="/buy-side/"
+                >
+                  買い手企業向け支援を見る
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="service-item reveal">
+            <span class="service-num">02</span>
+
+            <div>
+              <h3>
+                売り手企業向けM&A実務支援
+              </h3>
+
+              <p>
+                売却方針の整理から企業価値の見立て、
+                買い手候補の検討、条件交渉、
+                DD対応、クロージングまで支援します。
+              </p>
+
+              <div class="hero-actions">
+                <a
+                  class="secondary-button"
+                  href="/sell-side/"
+                >
+                  売り手企業向け支援を見る
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section problem" id="strength">
+        <div class="section-head reveal">
+          <p class="eyebrow">Why KITEN</p>
+
+          <h2>
+            採用せずに、M&Aの専門人材を。
+          </h2>
+        </div>
+
+        <div class="problem-grid">
+          <article class="problem-card reveal">
+            <span>01</span>
+
+            <h3>経験とノウハウを補う</h3>
+
+            <p>
+              M&Aの推進には、案件検討から交渉、
+              デューデリジェンス、契約まで、
+              幅広い経験と専門的なノウハウが必要です。
+              実務経験を持つ人材が、貴社のM&A推進を支援します。
+            </p>
+          </article>
+
+          <article class="problem-card reveal">
+            <span>02</span>
+
+            <h3>実務リソースを確保する</h3>
+
+            <p>
+              社内の担当者だけでは不足しやすい実務リソースを、
+              業務委託形式で補完します。
+              社内メンバーと連携しながら、
+              案件を前に進めます。
+            </p>
+          </article>
+
+          <article class="problem-card reveal">
+            <span>03</span>
+
+            <h3>固定化リスクを抑える</h3>
+
+            <p>
+              専門人材を正社員として新規採用する場合と比べ、
+              採用コストや人材の固定化リスクを抑えられます。
+              契約期間は最低3か月から、
+              ニーズに合わせて調整可能です。
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section message-section reveal">
+        <div class="message-card">
+          <p class="eyebrow">Professional Team</p>
+
+          <h2>
+            実務経験を持つ人材が、<br />
+            貴社のチームに加わります。
+          </h2>
+
+          <p>
+            上場企業でM&A責任者を務めた人材や、
+            デロイト、M&A総研などで
+            FA業務を経験した人材を中心に、
+            案件の内容や必要な業務に合わせてアサインします。
+          </p>
+
+          <p>
+            外部からの助言だけではなく、
+            貴社の担当者と連携しながら、
+            M&Aの検討と実行を実務レベルでサポートします。
+          </p>
+        </div>
+      </section>
+
+      <section class="section service" id="price">
+        <div class="section-head reveal">
+          <p class="eyebrow">Service & Price</p>
+
+          <h2>
+            必要な支援を、必要な期間だけ。
+          </h2>
+        </div>
+
+        <div class="service-list">
+          <article class="service-item reveal">
+            <span class="service-num">01</span>
+
+            <div>
+              <h3>
+                非上場企業を対象とするM&A
+              </h3>
+
+              <p>
+                M&A戦略の整理、対象会社の検討、
+                アプローチ、条件交渉、
+                デューデリジェンス、契約対応など、
+                案件の状況に合わせて実務を支援します。
+              </p>
+
+              <p>
+                <strong>月額10万円〜</strong>
+              </p>
+
+              <div class="hero-actions">
+                <a
+                  class="primary-button"
+                  href="#contactModal"
+                  data-contact-open
+                >
+                  詳細を相談する
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="service-item reveal">
+            <span class="service-num">02</span>
+
+            <div>
+              <h3>
+                上場企業を対象とするM&A
+              </h3>
+
+              <p>
+                上場企業を対象とした案件に必要となる調査、
+                社内検討資料の作成、専門家との連携、
+                交渉や実行プロセスを支援します。
+              </p>
+
+              <p>
+                <strong>月額20万円〜</strong>
+              </p>
+
+              <div class="hero-actions">
+                <a
+                  class="secondary-button"
+                  href="#contactModal"
+                  data-contact-open
+                >
+                  詳細を相談する
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section problem">
+        <div class="section-head reveal">
+          <p class="eyebrow">Track Record</p>
+
+          <h2>
+            累計15社以上のM&A推進を支援。
+          </h2>
+        </div>
+
+        <div class="problem-grid">
+          <article class="problem-card reveal">
+            <span>01</span>
+
+            <h3>上場企業</h3>
+
+            <p>
+              株式会社fonfun様をはじめ、
+              プロモーション企画事業を手掛ける
+              東証上場企業などをご支援しています。
+            </p>
+          </article>
+
+          <article class="problem-card reveal">
+            <span>02</span>
+
+            <h3>成長企業・事業会社</h3>
+
+            <p>
+              大手保険代理店やIPO準備中のSI企業など、
+              成長フェーズにある企業の
+              M&A推進を支援しています。
+            </p>
+          </article>
+
+          <article class="problem-card reveal">
+            <span>03</span>
+
+            <h3>海外上場企業</h3>
+
+            <p>
+              複数の海外上場企業を含め、
+              企業ごとの体制や案件状況に合わせた
+              実務支援を行っています。
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="contact" id="contact">
+        <div class="contact-inner reveal">
+          <p class="eyebrow">Contact</p>
+
+          <h2>
+            まずは30分、<br />
+            現在の状況をお聞かせください。
+          </h2>
+
+          <p>
+            M&Aを検討しているものの、
+            社内の経験やリソースが不足している。
+            どの業務を依頼できるか知りたい。
+            そのような段階からでもご相談いただけます。
+          </p>
+
+          <p>
+            オンラインにて、
+            サービス内容や支援方法について
+            ご説明いたします。
+          </p>
+
+          <a
+            class="primary-button light"
+            href="#contactModal"
+            data-contact-open
+          >
+            オンライン相談を申し込む
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- お問い合わせモーダル -->
+    <div
+      class="contact-modal"
+      id="contactModal"
+      aria-hidden="true"
+    >
+      <div
+        class="contact-modal__overlay"
+        data-contact-close
+      ></div>
+
+      <div
+        class="contact-modal__content"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contactModalTitle"
+      >
+        <button
+          class="contact-modal__close"
+          type="button"
+          aria-label="お問い合わせフォームを閉じる"
+          data-contact-close
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+
+        <!-- フォーム入力画面 -->
+        <div id="contactFormView">
+          <div class="contact-modal__heading">
+            <p class="eyebrow">Contact</p>
+
+            <h2 id="contactModalTitle">
+              オンライン相談のお申し込み
+            </h2>
+
+            <p class="contact-modal__description">
+              現在の状況やご相談内容をご入力ください。<br />
+              内容を確認のうえ、担当者よりご連絡いたします。
+            </p>
+          </div>
+
+          <form
+            id="contactForm"
+            class="contact-form"
+            action="https://script.google.com/macros/s/AKfycbwlRa25xMPW-XqKxPv1qW6dAzJcXKfqYI62VX0aQ0hNYVIiO5ZY21LHV7iPg1blXhehxQ/exec"
+            method="post"
+            target="gasResponseFrame"
+          >
+            <div class="contact-form__field">
+              <label for="contactCompany">
+                会社名
+              </label>
+
+              <input
+                id="contactCompany"
+                type="text"
+                name="company"
+                maxlength="200"
+                autocomplete="organization"
+              />
+            </div>
+
+            <div class="contact-form__field">
+              <label for="contactName">
+                お名前
+
+                <span class="contact-form__required">
+                  必須
+                </span>
+              </label>
+
+              <input
+                id="contactName"
+                type="text"
+                name="name"
+                maxlength="100"
+                autocomplete="name"
+                required
+              />
+            </div>
+
+            <div class="contact-form__field">
+              <label for="contactEmail">
+                メールアドレス
+
+                <span class="contact-form__required">
+                  必須
+                </span>
+              </label>
+
+              <input
+                id="contactEmail"
+                type="email"
+                name="email"
+                maxlength="254"
+                autocomplete="email"
+                required
+              />
+            </div>
+
+            <div class="contact-form__field">
+              <label for="contactPhone">
+                電話番号
+              </label>
+
+              <input
+                id="contactPhone"
+                type="tel"
+                name="phone"
+                maxlength="50"
+                autocomplete="tel"
+              />
+            </div>
+
+            <div class="contact-form__field">
+              <label for="contactMessage">
+                ご相談内容
+
+                <span class="contact-form__required">
+                  必須
+                </span>
+              </label>
+
+              <textarea
+                id="contactMessage"
+                name="message"
+                rows="6"
+                maxlength="5000"
+                required
+              ></textarea>
+            </div>
+
+            <!-- ボット対策用 -->
+            <div
+              class="contact-form__honeypot"
+              aria-hidden="true"
+            >
+              <label for="contactWebsite">
+                Webサイト
+              </label>
+
+              <input
+                id="contactWebsite"
+                type="text"
+                name="website"
+                tabindex="-1"
+                autocomplete="off"
+              />
+            </div>
+
+            <p
+              id="contactFormError"
+              class="contact-form__error"
+              role="alert"
+              aria-live="polite"
+            ></p>
+
+            <button
+              id="contactSubmitButton"
+              class="contact-form__submit"
+              type="submit"
+            >
+              相談内容を送信する
+            </button>
+          </form>
+        </div>
+
+        <!-- 送信完了画面 -->
+        <div
+          id="contactCompleteView"
+          class="contact-complete"
+          hidden
+        >
+          <div
+            class="contact-complete__icon"
+            aria-hidden="true"
+          >
+            ✓
+          </div>
+
+          <p class="eyebrow">Completed</p>
+
+          <h2>送信が完了しました</h2>
+
+          <p class="contact-complete__message">
+            お問い合わせありがとうございます。<br />
+            内容を確認のうえ、担当者よりご連絡いたします。
+          </p>
+
+          <button
+            class="contact-form__submit"
+            type="button"
+            data-contact-close
+          >
+            閉じる
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GASからの応答を受け取る非表示iframe -->
+    <iframe
+      id="gasResponseFrame"
+      name="gasResponseFrame"
+      title="お問い合わせ送信結果"
+      hidden
+    ></iframe>
+
+    <footer class="footer">
+      <div>
+        <strong>KITEN</strong>
+        <p>M&A Execution Support</p>
+      </div>
+
+      <small>
+        © KITEN. All Rights Reserved.
+      </small>
+    </footer>
+
+    <!-- 既存JavaScript -->
+    <script src="app.js"></script>
+
+    <!-- お問い合わせモーダル用JavaScript -->
+    <script>
+      (() => {
+        const modal = document.getElementById("contactModal");
+        const contactForm =
+          document.getElementById("contactForm");
+        const formView =
+          document.getElementById("contactFormView");
+        const completeView =
+          document.getElementById("contactCompleteView");
+        const submitButton =
+          document.getElementById("contactSubmitButton");
+        const errorElement =
+          document.getElementById("contactFormError");
+
+        if (
+          !modal ||
+          !contactForm ||
+          !formView ||
+          !completeView ||
+          !submitButton ||
+          !errorElement
+        ) {
+          return;
+        }
+
+        const openButtons = document.querySelectorAll(
+          "[data-contact-open]"
+        );
+
+        const closeButtons = document.querySelectorAll(
+          "[data-contact-close]"
+        );
+
+        let lastFocusedElement = null;
+        let responseTimer = null;
+        let isSubmitting = false;
+
+        function resetSubmitButton() {
+          isSubmitting = false;
+          submitButton.disabled = false;
+          submitButton.textContent =
+            "相談内容を送信する";
+        }
+
+        function resetContactForm() {
+          contactForm.reset();
+
+          formView.hidden = false;
+          completeView.hidden = true;
+
+          errorElement.textContent = "";
+
+          resetSubmitButton();
+
+          if (responseTimer) {
+            window.clearTimeout(responseTimer);
+            responseTimer = null;
+          }
+        }
+
+        function closeMobileMenu() {
+          const mobileMenu = document.querySelector(
+            "[data-mobile-menu]"
+          );
+
+          const menuButton = document.querySelector(
+            "[data-menu-button]"
+          );
+
+          if (mobileMenu) {
+            mobileMenu.classList.remove("is-open");
+            mobileMenu.classList.remove("active");
+            mobileMenu.classList.remove("open");
+          }
+
+          if (menuButton) {
+            menuButton.classList.remove("is-open");
+            menuButton.classList.remove("active");
+            menuButton.classList.remove("open");
+
+            menuButton.setAttribute(
+              "aria-expanded",
+              "false"
+            );
+          }
+        }
+
+        function openModal(event) {
+          if (event) {
+            event.preventDefault();
+          }
+
+          lastFocusedElement = document.activeElement;
+
+          closeMobileMenu();
+
+          if (!completeView.hidden) {
+            resetContactForm();
+          }
+
+          modal.classList.add("is-open");
+          modal.setAttribute("aria-hidden", "false");
+
+          document.body.classList.add(
+            "contact-modal-open"
+          );
+
+          window.setTimeout(() => {
+            document
+              .getElementById("contactName")
+              ?.focus();
+          }, 50);
+        }
+
+        function closeModal() {
+          if (isSubmitting) {
+            return;
+          }
+
+          modal.classList.remove("is-open");
+          modal.setAttribute("aria-hidden", "true");
+
+          document.body.classList.remove(
+            "contact-modal-open"
+          );
+
+          if (lastFocusedElement) {
+            lastFocusedElement.focus();
+          }
+        }
+
+        openButtons.forEach((button) => {
+          button.addEventListener("click", openModal);
+        });
+
+        closeButtons.forEach((button) => {
+          button.addEventListener("click", closeModal);
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (
+            event.key === "Escape" &&
+            modal.classList.contains("is-open")
+          ) {
+            closeModal();
+          }
+        });
+
+        contactForm.addEventListener("submit", () => {
+          if (isSubmitting) {
+            return;
+          }
+
+          isSubmitting = true;
+
+          errorElement.textContent = "";
+
+          submitButton.disabled = true;
+          submitButton.textContent = "送信中...";
+
+          if (responseTimer) {
+            window.clearTimeout(responseTimer);
+          }
+
+          responseTimer = window.setTimeout(() => {
+            errorElement.textContent =
+              "送信結果を確認できませんでした。通信環境をご確認のうえ、もう一度お試しください。";
+
+            resetSubmitButton();
+          }, 30000);
+        });
+
+        window.addEventListener("message", (event) => {
+          const isGoogleOrigin =
+            event.origin ===
+              "https://script.google.com" ||
+            event.origin ===
+              "https://script.googleusercontent.com" ||
+            event.origin.endsWith(
+              ".googleusercontent.com"
+            );
+
+          if (!isGoogleOrigin) {
+            return;
+          }
+
+          const result = event.data;
+
+          if (
+            !result ||
+            result.source !== "kiten-contact-form"
+          ) {
+            return;
+          }
+
+          if (responseTimer) {
+            window.clearTimeout(responseTimer);
+            responseTimer = null;
+          }
+
+          if (result.ok) {
+            isSubmitting = false;
+
+            formView.hidden = true;
+            completeView.hidden = false;
+
+            completeView
+              .querySelector("button")
+              ?.focus();
+
+            return;
+          }
+
+          errorElement.textContent =
+            result.message ||
+            "送信できませんでした。時間をおいて、もう一度お試しください。";
+
+          resetSubmitButton();
+        });
+      })();
+    </script>
+  </body>
 </html>
