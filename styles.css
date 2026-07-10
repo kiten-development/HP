@@ -388,8 +388,18 @@ button { font: inherit; }
   letter-spacing: -0.055em;
   font-weight: 900;
 }
-.problem .section-head { max-width: none; }
-.problem .section-head h2 { white-space: nowrap; font-size: clamp(40px, 5.4vw, 82px); letter-spacing: -0.07em; }
+.problem .section-head {
+  max-width: 1200px;
+}
+
+.problem .section-head h2 {
+  font-size: clamp(40px, 4.8vw, 72px);
+  line-height: 1.14;
+  letter-spacing: -0.07em;
+  white-space: normal;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
 
 .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .problem-card {
