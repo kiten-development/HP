@@ -947,3 +947,18 @@ button { font: inherit; }
     border-radius: 14px;
   }
 }
+
+.hero-cta-group {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: min(100%, 425px);
+  margin-top: 32px;
+}
+
+.hero-cta-group .primary-button,
+.hero-cta-group .secondary-button {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+}
